@@ -1,0 +1,154 @@
+@baseUrl = http://localhost:3000
+
+# ==============================
+# NYILVÁNOS VÉGPONTOK
+# ==============================
+
+### 1. Termékek listázása
+# Elvárt eredmény: 200 OK, JSON tömb a termékekkel.
+# @name getTermekek
+GET {{baseUrl}}/api/termekek
+Content-Type: application/json
+
+### 2. Új rendelés létrehozása (sikeres)
+# Elvárt eredmény: 201 Created, JSON objektum { "siker": true, "rendelesId": <szám> }.
+# @name postRendelesSikeres
+POST {{baseUrl}}/api/rendeles
+Content-Type: application/json
+
+{
+    "nev": "Teszt Elek",
+    "email": "teszt@elek.hu",
+    "telefon": "+36301234567",
+    "iranyitoszam": "1234",
+    "telepules": "Tesztváros",
+    "cim": "Teszt utca 1.",
+    "tetelek": [
+        { "termek_id": 1, "mennyiseg": 2 },
+        { "termek_id": 2, "mennyiseg": 1 }
+    ]
+}
+
+# A `postRendelesSikeres` kérés válaszában kapott `rendelesId`
+# automatikusan felhasználásra kerül a 7. tesztben.
+
+### 2.1. Új rendelés létrehozása (hiányos adatokkal)
+# Elvárt eredmény: 400 Bad Request, JSON objektum { "siker": false, "message": "Hiányzó vagy érvénytelen adatok a rendeléshez." }.
+POST {{baseUrl}}/api/rendeles
+Content-Type: application/json
+
+{
+    "nev": "Hiányos Adat",
+    "email": "hianyos@adat.hu"
+    // Hiányzó többi mező és tételek
+}
+
+###
+
+### 2.2. Új rendelés létrehozása (érvénytelen tételekkel)
+# Elvárt eredmény: 400 Bad Request, JSON objektum { "siker": false, "message": "Érvénytelen tételek a rendelésben." }.
+POST {{baseUrl}}/api/rendeles
+Content-Type: application/json
+
+{
+    "nev": "Teszt Elek RosszTetelek",
+    "email": "teszt.rossz@elek.hu",
+    "telefon": "+36301234567",
+    "iranyitoszam": "1234",
+    "telepules": "Tesztváros",
+    "cim": "Teszt utca 1.",
+    "tetelek": [
+        { "termek_id": 1, "mennyiseg": -1 },
+        { "termek_id": 999, "mennyiseg": 1 }
+    ]
+}
+
+# ==============================
+# ADMIN VÉGPONTOK
+# ==============================
+
+### 3. Admin bejelentkezés (sikeres)
+# Elvárt eredmény: 200 OK, JSON objektum { "token": "<jwt_token>" }.
+# @name loginAdmin
+POST {{baseUrl}}/api/admin/login
+Content-Type: application/json
+
+{
+    "felhasznalonev": "admin",
+    "jelszo": "Minad123"
+}
+
+# A `loginAdmin` kérés válaszában kapott `token`
+# automatikusan felhasználásra kerül a védett végpontoknál.
+
+### 3.1. Admin bejelentkezés (hibás jelszó)
+# Elvárt eredmény: 403 Forbidden, szöveges válasz "Hibás jelszó".
+POST {{baseUrl}}/api/admin/login
+Content-Type: application/json
+
+{
+    "felhasznalonev": "admin",
+    "jelszo": "hibasjelszo123"
+}
+
+### 3.2. Admin bejelentkezés (hibás felhasználónév)
+# Elvárt eredmény: 403 Forbidden, szöveges válasz "Hibás felhasználónév".
+POST {{baseUrl}}/api/admin/login
+Content-Type: application/json
+
+{
+    "felhasznalonev": "nemletezoadmin",
+    "jelszo": "Minad123"
+}
+
+### 4. Összes rendelés listázása (admin)
+# Elvárt eredmény: 200 OK (ha a token érvényes), JSON tömb a rendelésekkel.
+# @name getAdminRendelesek
+GET {{baseUrl}}/api/admin/rendelesek
+Authorization: Bearer {{loginAdmin.response.body.token}}
+Content-Type: application/json
+
+### 4.1. Összes rendelés listázása (admin, token nélkül)
+# Elvárt eredmény: 403 Forbidden, szöveges válasz "Érvénytelen vagy hiányzó Bearer token".
+GET {{baseUrl}}/api/admin/rendelesek
+Content-Type: application/json
+
+### 5. Egy adott rendelés tételeinek lekérése (admin)
+# Használjuk a tesztadatok.sql-ből az ID=1 rendelést
+# Elvárt eredmény: 200 OK (ha a token érvényes és a rendelés létezik), JSON tömb a rendelés tételeivel.
+# @name getAdminRendelesTetel
+GET {{baseUrl}}/api/admin/rendelesek/1
+Authorization: Bearer {{loginAdmin.response.body.token}}
+Content-Type: application/json
+
+### 5.1. Egy nem létező rendelés tételeinek lekérése (admin)
+# Elvárt eredmény: 404 Not Found (ha a token érvényes), JSON objektum { "message": "A megadott azonosítóval nem található rendelés." }.
+GET {{baseUrl}}/api/admin/rendelesek/9999
+Authorization: Bearer {{loginAdmin.response.body.token}}
+Content-Type: application/json
+
+### 6. Rendelés postázási dátumának frissítése (admin)
+# Használjuk a tesztadatok.sql-ből az ID=2 rendelést (aminek nincs postázva dátuma)
+# Elvárt eredmény: 200 OK (ha a token érvényes és a rendelés létezik), JSON objektum { "modositott": 1 }.
+# @name putAdminPostazas
+PUT {{baseUrl}}/api/admin/rendelesek/2/postazas
+Authorization: Bearer {{loginAdmin.response.body.token}}
+Content-Type: application/json
+
+{
+    "datum_postazas": "2025-02-28"
+}
+
+### 7. Rendelés törlése (admin)
+# FIGYELEM: Mielőtt ezt futtatod, győződj meg róla, hogy a "2. Új rendelés létrehozása (sikeres)" (`postRendelesSikeres`) kérés lefutott.
+# Elvárt eredmény: 200 OK (ha a token érvényes és a rendelés létezik), JSON objektum { "torolve": 1 }.
+# @name deleteAdminRendeles
+DELETE {{baseUrl}}/api/admin/rendelesek/{{postRendelesSikeres.response.body.rendelesId}}
+Authorization: Bearer {{loginAdmin.response.body.token}}
+Content-Type: application/json
+
+### 7.1. Nem létező rendelés törlése (admin)
+# Elvárt eredmény: 404 Not Found (ha a token érvényes), JSON objektum { "message": "A megadott azonosítóval nem található rendelés a törléshez." }.
+DELETE {{baseUrl}}/api/admin/rendelesek/9998 # A loginAdmin kérés lefutása után a token automatikusan bekerül.
+Authorization: Bearer {{loginAdmin.response.body.token}}
+Content-Type: application/json

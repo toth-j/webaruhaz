@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Rendelések Kezelése</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="bg-dark text-white p-3 mb-4">
+        <div class="container-lg d-flex justify-content-between align-items-center">
+            <h1 class="h4 mb-0">Admin felület - Rendelések</h1>
+            <button id="logoutButton" class="btn btn-outline-light btn-sm">Kijelentkezés</button>
+        </div>
+    </header>
+
+    <main class="container-lg">
+        <h2 class="mb-3">Beérkezett rendelések</h2>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Vevő neve</th>
+                        <th>Email</th>
+                        <th>Cím</th>
+                        <th>Megrendelve</th>
+                        <th>Postázva</th>
+                        <th>Tételek</th>
+                        <th>Műveletek</th>
+                    </tr>
+                </thead>
+                <tbody id="rendelesekTablaBody">
+                    <!-- Rendelések ide kerülnek JavaScript segítségével -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Bejelentkezési modal -->
+    <div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Admin bejelentkezés</h5>
+                    <!-- Eltávolítjuk a bezárás gombot, hogy a bejelentkezés kötelező legyen -->
+                </div>
+                <div class="modal-body">
+                    <form id="adminLoginFormModal">
+                        <div class="mb-3">
+                            <label for="modalFelhasznalonev" class="form-label">Felhasználónév</label>
+                            <input type="text" class="form-control" id="modalFelhasznalonev" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="modalJelszo" class="form-label">Jelszó</label>
+                            <input type="password" class="form-control" id="modalJelszo" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Bejelentkezés</button>
+                        <div id="loginModalError" class="text-danger mt-2" style="display: none;"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!-- Rendelés tételei modal -->
+    <div class="modal fade" id="tetelekModal" tabindex="-1" aria-labelledby="tetelekModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tetelekModalLabel">Rendelés tételei (ID: <span id="tetelekModalRendelesId"></span>)</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Termék Név</th>
+                                <th>Ár</th>
+                                <th>Mennyiség</th>
+                                <th>Összesen</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rendelesTetelekTablaBody">
+                            <!-- Tételek ide -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="text-center p-3 mt-5 bg-light border-top">
+        <p>&copy; 2023 Webáruház Kft. - Admin</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

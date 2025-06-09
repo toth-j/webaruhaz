@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webáruház - Pénztár</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="bg-dark text-white p-4 mb-4">
+        <div class="container">
+            <h1 class="display-4">Pénztár</h1>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="row g-5">
+            <!-- Rendelés összesítése -->
+            <div class="col-md-5 col-lg-4 order-md-last">
+                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-primary">Kosarad</span>
+                    <span id="kosar-darabszam" class="badge bg-primary rounded-pill">0</span>
+                </h4>
+                <ul id="rendelt-tetelek-lista" class="list-group mb-3">
+                    <!-- Tételek ide kerülnek JS-sel -->
+                    <!-- Példa tétel:
+                    <li class="list-group-item d-flex justify-content-between lh-sm summary-item">
+                        <div>
+                            <h6 class="my-0">Termék neve</h6>
+                            <small class="text-muted">Mennyiség: 1</small>
+                        </div>
+                        <span class="text-muted">1200 Ft</span>
+                    </li>
+                    -->
+                </ul>
+
+                <div class="list-group-item d-flex justify-content-between">
+                    <span>Végösszeg (Ft)</span>
+                    <strong id="checkout-vegosszeg">0 Ft</strong>
+                </div>
+            </div>
+
+            <!-- Számlázási/Szállítási adatok -->
+            <div class="col-md-7 col-lg-8">
+                <h4 class="mb-3">Szállítási adatok</h4>
+                <form id="rendeles-urlap" class="needs-validation" novalidate>
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label for="nev" class="form-label">Teljes név</label>
+                            <input type="text" class="form-control" id="nev" name="nev" placeholder="Minta János"
+                                required>
+                            <div class="invalid-feedback">
+                                Kérjük, adja meg a teljes nevét.
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="email" class="form-label">Email cím</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                placeholder="nev@example.com" required>
+                            <div class="invalid-feedback">
+                                Kérjük, adjon meg egy érvényes email címet.
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="telefon" class="form-label">Telefonszám</label>
+                            <input type="tel" class="form-control" id="telefon" name="telefon"
+                                placeholder="+36 30 123 4567" required>
+                            <div class="invalid-feedback">
+                                Kérjük, adja meg a telefonszámát.
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <label for="iranyitoszam" class="form-label">Irányítószám</label>
+                            <input type="text" class="form-control" id="iranyitoszam" name="iranyitoszam"
+                                placeholder="1234" pattern="[0-9]{4}" required>
+                            <div class="invalid-feedback">
+                                Érvényes irányítószám szükséges (4 számjegy).
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <label for="telepules" class="form-label">Település</label>
+                            <input type="text" class="form-control" id="telepules" name="telepules"
+                                placeholder="Budapest" required>
+                            <div class="invalid-feedback">
+                                Kérjük, adja meg a települést.
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="cim" class="form-label">Cím (Utca, házszám)</label>
+                            <input type="text" class="form-control" id="cim" name="cim" placeholder="Fő utca 1."
+                                required>
+                            <div class="invalid-feedback">
+                                Kérjük, adja meg a szállítási címet.
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <button id="rendeles-elkuldese-gomb" class="w-100 btn btn-primary btn-lg" type="submit">Megrendelés
+                        elküldése</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-center p-3 mt-5 bg-light border-top">
+        <p>&copy; 2023 Webáruház Kft. - Minden jog fenntartva.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script src="checkout.js"></script>
+</body>
+
+</html>

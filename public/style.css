@@ -1,0 +1,9 @@
+body {
+  background-color: #f8f9fa;
+}
+
+.summary-item img {
+  max-width: 60px;
+  height: auto;
+  margin-right: 10px;
+}
