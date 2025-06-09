@@ -74,7 +74,7 @@ Ez a dokumentum a "Webáruház" elnevezésű egyszerű e-kereskedelmi alkalmazá
 * **F-A6:** Az adminisztrátornak listázva kell látnia a beérkezett rendeléseket.
 * **F-A7:** A rendelési listában meg kell jeleníteni a rendelés azonosítóját, a vevő nevét, email címét, szállítási címét, a megrendelés dátumát és a postázás állapotát/dátumát.
 * **F-A8:** Az adminisztrátornak meg kell tudnia tekinteni egy adott rendelés részleteit (a rendelt tételeket, azok mennyiségét és árát).
-* **F-A9:** Az adminisztrátornak lehetősége kell legyen egy rendelést "postázottnak" jelölni (aktuális dátummal).
+* **F-A9:** Az adminisztrátornak lehetősége kell legyen egy rendelést "postázottnak" jelölni (aktuális dátummal), ha még nem volt postázva.
 * **F-A10:** Az adminisztrátornak lehetősége kell legyen egy rendelést törölni.
 
 ## 4. Nem funkcionális követelmények

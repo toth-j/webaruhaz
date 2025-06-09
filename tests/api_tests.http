@@ -139,6 +139,18 @@ Content-Type: application/json
     "datum_postazas": "2025-02-28"
 }
 
+### 6.1. Már postázott rendelés postázási dátumának frissítési kísérlete (admin)
+# Használjuk a tesztadatok.sql-ből az ID=1 rendelést (ami már postázva van)
+# Elvárt eredmény: 409 Conflict, JSON objektum { "message": "A rendelés már korábban postázásra került. A dátum nem módosítható." }.
+# @name putAdminPostazasMarPostazott
+PUT {{baseUrl}}/api/admin/rendelesek/1/postazas
+Authorization: Bearer {{loginAdmin.response.body.token}}
+Content-Type: application/json
+
+{
+    "datum_postazas": "2025-03-01"
+}
+
 ### 7. Rendelés törlése (admin)
 # FIGYELEM: Mielőtt ezt futtatod, győződj meg róla, hogy a "2. Új rendelés létrehozása (sikeres)" (`postRendelesSikeres`) kérés lefutott.
 # Elvárt eredmény: 200 OK (ha a token érvényes és a rendelés létezik), JSON objektum { "torolve": 1 }.

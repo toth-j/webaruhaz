@@ -180,6 +180,11 @@ app.get('/api/admin/rendelesek/:id', verifyToken, (req, res) => {
 app.put('/api/admin/rendelesek/:id/postazas', verifyToken, (req, res) => {
   const { datum_postazas } = req.body;
   try {
+    // Ellenőrizzük, hogy a rendelés már postázva lett-e korábban
+    const rendeles = db.prepare('SELECT postazva FROM rendelesek WHERE id = ?').get(req.params.id);
+    if (rendeles.postazva) {
+      return res.status(409).json({ message: "A rendelés már korábban postázásra került. A dátum nem módosítható." });
+    }
     const result = db.prepare('UPDATE rendelesek SET postazva = ? WHERE id = ?')
       .run(datum_postazas, req.params.id);
     res.status(200).json({ modositott: result.changes });

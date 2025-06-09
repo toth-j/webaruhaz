@@ -75,8 +75,8 @@ Az adminisztrátori felülethez hozzáféréssel rendelkező felhasználókat t�
 
 A szerver indításakor, ha az `admin` tábla üres, automatikusan létrehozásra kerül egy alapértelmezett adminisztrátor:
 
-* **Felhasználónév:** `admin`
-* **Jelszó:** A `.env` fájlban megadott `DEFAULT_ADMIN_PASSWORD` értéke.
+- **Felhasználónév:** `admin`
+- **Jelszó:** A `.env` fájlban megadott `DEFAULT_ADMIN_PASSWORD` értéke.
 
 ## 3. API végpontok leírása
 
@@ -86,13 +86,13 @@ Az API végpontok a `http://localhost:PORT/api/` útvonalon érhetők el, ahol a
 
 #### 3.1.1. Termékek listázása
 
-* **Végpont:** `GET /api/termekek`
-* **Leírás:** Visszaadja az összes elérhető terméket.
-* **Authentikáció:** Nem szükséges.
-* **Kérés Body:** Nincs.
-* **Sikeres válasz:**
-  * Kód: `200 OK`
-  * Tartalom: JSON tömb a termékekkel.
+- **Végpont:** `GET /api/termekek`
+- **Leírás:** Visszaadja az összes elérhető terméket.
+- **Authentikáció:** Nem szükséges.
+- **Kérés Body:** Nincs.
+- **Sikeres válasz:**
+  - Kód: `200 OK`
+  - Tartalom: JSON tömb a termékekkel.
         ```json
         [
           {
@@ -105,16 +105,16 @@ Az API végpontok a `http://localhost:PORT/api/` útvonalon érhetők el, ahol a
           // ...további termékek
         ]
         ```
-* **Hiba esetén a válasz:**
-  * Kód: `500 Internal Server Error`
-  * Tartalom: `{ "error": "hibaüzenet" }`
+- **Hiba esetén a válasz:**
+  - Kód: `500 Internal Server Error`
+  - Tartalom: `{ "error": "hibaüzenet" }`
 
 #### 3.1.2. Új rendelés létrehozása
 
-* **Végpont:** `POST /api/rendeles`
-* **Leírás:** Új vásárlói rendelést hoz létre.
-* **Authentikáció:** Nem szükséges.
-* **Kérés Body:**
+- **Végpont:** `POST /api/rendeles`
+- **Leírás:** Új vásárlói rendelést hoz létre.
+- **Authentikáció:** Nem szükséges.
+- **Kérés Body:**
 
     ```json
     {
@@ -131,21 +131,21 @@ Az API végpontok a `http://localhost:PORT/api/` útvonalon érhetők el, ahol a
     }
     ```
 
-* **Sikeres válasz:**
-  * Kód: `201 Created`
-  * Tartalom:
+- **Sikeres válasz:**
+  - Kód: `201 Created`
+  - Tartalom:
         ```json
         {
             "siker": true,
             "rendelesId": 123 // Az újonnan létrehozott rendelés azonosítója
         }
         ```
-* **Hiba esetén a válaszok:**
-  * Kód: `400 Bad Request` (Hiányzó vagy érvénytelen adatok)
-    * Tartalom: `{ "siker": false, "message": "Hiányzó vagy érvénytelen adatok a rendeléshez." }`
-    * Tartalom: `{ "siker": false, "message": "Érvénytelen tételek a rendelésben." }`
-  * Kód: `500 Internal Server Error`
-    * Tartalom: `{ "siker": false, "message": "Szerverhiba történt a rendelés feldolgozása közben.", "error": "részletes hibaüzenet" }`
+- **Hiba esetén a válaszok:**
+  - Kód: `400 Bad Request` (Hiányzó vagy érvénytelen adatok)
+    - Tartalom: `{ "siker": false, "message": "Hiányzó vagy érvénytelen adatok a rendeléshez." }`
+    - Tartalom: `{ "siker": false, "message": "Érvénytelen tételek a rendelésben." }`
+  - Kód: `500 Internal Server Error`
+    - Tartalom: `{ "siker": false, "message": "Szerverhiba történt a rendelés feldolgozása közben.", "error": "részletes hibaüzenet" }`
 
 ### 3.2. Admin végpontok
 
@@ -153,10 +153,10 @@ Az adminisztrátori végpontokhoz érvényes JWT token szükséges az `Authoriza
 
 #### 3.2.1. Admin bejelentkezés
 
-* **Végpont:** `POST /api/admin/login`
-* **Leírás:** Adminisztrátor bejelentkeztetése, JWT token generálása.
-* **Authentikáció:** Nem szükséges.
-* **Kérés Body:**
+- **Végpont:** `POST /api/admin/login`
+- **Leírás:** Adminisztrátor bejelentkeztetése, JWT token generálása.
+- **Authentikáció:** Nem szükséges.
+- **Kérés Body:**
 
     ```json
     {
@@ -165,46 +165,46 @@ Az adminisztrátori végpontokhoz érvényes JWT token szükséges az `Authoriza
     }
     ```
 
-* **Sikeres válasz:**
-  * Kód: `200 OK`
-  * Tartalom:
+- **Sikeres válasz:**
+  - Kód: `200 OK`
+  - Tartalom:
         ```json
         {
             "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." // JWT token
         }
         ```
-* **Hiba esetén a válaszok:**
-  * Kód: `403 Forbidden`
-    * Tartalom (szöveg): `"Hibás felhasználónév"`
-    * Tartalom (szöveg): `"Hibás jelszó"`
-  * Kód: `500 Internal Server Error`
-    * Tartalom: `{ "message": "Szerverhiba történt a bejelentkezés során.", "error": "részletes hibaüzenet" }`
+- **Hiba esetén a válaszok:**
+  - Kód: `403 Forbidden`
+    - Tartalom (szöveg): `"Hibás felhasználónév"`
+    - Tartalom (szöveg): `"Hibás jelszó"`
+  - Kód: `500 Internal Server Error`
+    - Tartalom: `{ "message": "Szerverhiba történt a bejelentkezés során.", "error": "részletes hibaüzenet" }`
 
 #### 3.2.2. Összes rendelés listázása (admin)
 
-* **Végpont:** `GET /api/admin/rendelesek`
-* **Leírás:** Visszaadja az összes rendelést, a legfrissebbel kezdve.
-* **Authentikáció:** Szükséges (Bearer token).
-* **Kérés Body:** Nincs.
-* **Sikeres válasz:**
-  * Kód: `200 OK`
-  * Tartalom: JSON tömb a rendelésekkel (lásd `rendelesek` tábla struktúrája).
-* **Hiba esetén a válaszok:**
-  * Kód: `403 Forbidden`
-    * Tartalom (szöveg): `"Érvénytelen vagy hiányzó Bearer token."`
-    * Tartalom (szöveg): `"Token verifikáció sikertelen, érvénytelen token."`
-  * Kód: `500 Internal Server Error`
+- **Végpont:** `GET /api/admin/rendelesek`
+- **Leírás:** Visszaadja az összes rendelést, a legfrissebbel kezdve.
+- **Authentikáció:** Szükséges (Bearer token).
+- **Kérés Body:** Nincs.
+- **Sikeres válasz:**
+  - Kód: `200 OK`
+  - Tartalom: JSON tömb a rendelésekkel (lásd `rendelesek` tábla struktúrája).
+- **Hiba esetén a válaszok:**
+  - Kód: `403 Forbidden`
+    - Tartalom (szöveg): `"Érvénytelen vagy hiányzó Bearer token."`
+    - Tartalom (szöveg): `"Token verifikáció sikertelen, érvénytelen token."`
+  - Kód: `500 Internal Server Error`
 
 #### 3.2.3. Egy adott rendelés tételeinek lekérése (admin)
 
-* **Végpont:** `GET /api/admin/rendelesek/:id`
-* **Leírás:** Visszaadja egy adott azonosítójú rendeléshez tartozó tételeket.
-* **Authentikáció:** Szükséges (Bearer token).
-* **URL Paraméter:** `:id` - A rendelés azonosítója.
-* **Kérés Body:** Nincs.
-* **Sikeres válasz:**
-  * Kód: `200 OK`
-  * Tartalom: JSON tömb a rendelés tételeivel.
+- **Végpont:** `GET /api/admin/rendelesek/:id`
+- **Leírás:** Visszaadja egy adott azonosítójú rendeléshez tartozó tételeket.
+- **Authentikáció:** Szükséges (Bearer token).
+- **URL Paraméter:** `:id` - A rendelés azonosítója.
+- **Kérés Body:** Nincs.
+- **Sikeres válasz:**
+  - Kód: `200 OK`
+  - Tartalom: JSON tömb a rendelés tételeivel.
         ```json
         [
             { "nev": "Termék A", "ar": 1000, "mennyiseg": 2 },
@@ -212,19 +212,19 @@ Az adminisztrátori végpontokhoz érvényes JWT token szükséges az `Authoriza
         ]
         ```
         (Ha a rendelés létezik, de nincsenek tételei, üres tömböt ad vissza.)
-* **Hiba esetén a válaszok:**
-  * Kód: `403 Forbidden` (Token hiba)
-  * Kód: `404 Not Found`
-    * Tartalom: `{ "message": "A megadott azonosítóval nem található rendelés." }`
-  * Kód: `500 Internal Server Error`
+- **Hiba esetén a válaszok:**
+  - Kód: `403 Forbidden` (Token hiba)
+  - Kód: `404 Not Found`
+    - Tartalom: `{ "message": "A megadott azonosítóval nem található rendelés." }`
+  - Kód: `500 Internal Server Error`
 
 #### 3.2.4. Rendelés postázási dátumának frissítése (admin)
 
-* **Végpont:** `PUT /api/admin/rendelesek/:id/postazas`
-* **Leírás:** Frissíti egy adott rendelés postázási dátumát.
-* **Authentikáció:** Szükséges (Bearer token).
-* **URL Paraméter:** `:id` - A rendelés azonosítója.
-* **Kérés Body:**
+- **Végpont:** `PUT /api/admin/rendelesek/:id/postazas`
+- **Leírás:** Frissíti egy adott rendelés postázási dátumát.
+- **Authentikáció:** Szükséges (Bearer token).
+- **URL Paraméter:** `:id` - A rendelés azonosítója.
+- **Kérés Body:**
 
     ```json
     {
@@ -232,40 +232,43 @@ Az adminisztrátori végpontokhoz érvényes JWT token szükséges az `Authoriza
     }
     ```
 
-* **Sikeres válasz:**
-  * Kód: `200 OK`
-  * Tartalom:
+- **Sikeres válasz:**
+  - Kód: `200 OK`
+    - Tartalom:
+
         ```json
         {
             "modositott": 1 // Ha sikeres volt a frissítés (1 sor módosult)
         }
         ```
-        (Ha a rendelés nem létezik, vagy a dátum már be volt állítva ugyanarra, `modositott: 0` lehet az eredmény, de a jelenlegi implementáció nem ellenőrzi a rendelés létezését expliciten ennél a végpontnál a frissítés előtt.)
-* **Hiba esetén a válaszok:**
-  * Kód: `403 Forbidden` (Token hiba)
-  * Kód: `500 Internal Server Error`
+
+- **Hiba esetén a válaszok:**
+  - Kód: `403 Forbidden` (Token hiba)
+  - Kód: `409 Conflict`
+    - Tartalom: `{ "message": "A rendelés már korábban postázásra került. A dátum nem módosítható." }`
+  - Kód: `500 Internal Server Error`
 
 #### 3.2.5. Rendelés törlése (admin)
 
-* **Végpont:** `DELETE /api/admin/rendelesek/:id`
-* **Leírás:** Töröl egy adott azonosítójú rendelést és a hozzá tartozó tételeket.
-* **Authentikáció:** Szükséges (Bearer token).
-* **URL Paraméter:** `:id` - A rendelés azonosítója.
-* **Kérés Body:** Nincs.
-* **Sikeres válasz:**
-  * Kód: `200 OK`
-  * Tartalom:
+- **Végpont:** `DELETE /api/admin/rendelesek/:id`
+- **Leírás:** Töröl egy adott azonosítójú rendelést és a hozzá tartozó tételeket.
+- **Authentikáció:** Szükséges (Bearer token).
+- **URL Paraméter:** `:id` - A rendelés azonosítója.
+- **Kérés Body:** Nincs.
+- **Sikeres válasz:**
+  - Kód: `200 OK`
+  - Tartalom:
         ```json
         {
             "message": "A(z) <id> azonosítójú rendelés sikeresen törölve.",
             "torolve": 1
         }
         ```
-* **Hiba esetén a válaszok:**
-  * Kód: `403 Forbidden` (Token hiba)
-  * Kód: `404 Not Found`
-    * Tartalom: `{ "message": "A megadott azonosítóval nem található rendelés a törléshez." }`
-  * Kód: `500 Internal Server Error`
+- **Hiba esetén a válaszok:**
+  - Kód: `403 Forbidden` (Token hiba)
+  - Kód: `404 Not Found`
+    - Tartalom: `{ "message": "A megadott azonosítóval nem található rendelés a törléshez." }`
+  - Kód: `500 Internal Server Error`
 
 ## 4. Tesztelés
 
@@ -281,13 +284,13 @@ A backend API végpontjainak tesztelésére a Visual Studio Code **REST Client**
 
 ### Tesztelt területek
 
-* **Nyilvános végpontok:** Termékek listázása, új rendelés létrehozása (sikeres és hibás esetek).
-* **Adminisztrátori bejelentkezés:** Sikeres és hibás felhasználónév/jelszó esetek.
-* **Védett adminisztrátori végpontok:**
-  * Rendelések listázása (érvényes és hiányzó/érvénytelen tokennel).
-  * Egyedi rendelés tételeinek lekérése (létező és nem létező rendelés).
-  * Postázási dátum frissítése.
-  * Rendelés törlése (létező és nem létező rendelés).
+- **Nyilvános végpontok:** Termékek listázása, új rendelés létrehozása (sikeres és hibás esetek).
+- **Adminisztrátori bejelentkezés:** Sikeres és hibás felhasználónév/jelszó esetek.
+- **Védett adminisztrátori végpontok:**
+  - Rendelések listázása (érvényes és hiányzó/érvénytelen tokennel).
+  - Egyedi rendelés tételeinek lekérése (létező és nem létező rendelés).
+  - Postázási dátum frissítése.
+  - Rendelés törlése (létező és nem létező rendelés).
 
 Az `api_tests.http` fájl úgy van felépítve, hogy a sikeres admin bejelentkezés után kapott JWT tokent, valamint az újonnan létrehozott rendelés azonosítóját automatikusan felhasználja a későbbi, releváns kérésekben a REST Client kiterjesztés beépített képességeit használva (pl. `{{loginAdmin.response.body.token}}`).
 
@@ -295,9 +298,9 @@ Az `api_tests.http` fájl úgy van felépítve, hogy a sikeres admin bejelentkez
 
 Az alkalmazás a következő környezeti változókat használhatja (a `.env` fájlból olvassa be őket):
 
-* `PORT`: A port, amin a szerver fut (alapértelmezett: `3000`).
-* `JWT_SECRET`: A JWT tokenek aláírásához használt titkos kulcs (alapértelmezett: `'titkoskulcs'`).
-* `DEFAULT_ADMIN_PASSWORD`: Az alapértelmezett admin felhasználó jelszava, ha az `admin` tábla üres (pl. `Minad123`).
+- `PORT`: A port, amin a szerver fut (alapértelmezett: `3000`).
+- `JWT_SECRET`: A JWT tokenek aláírásához használt titkos kulcs (alapértelmezett: `'titkoskulcs'`).
+- `DEFAULT_ADMIN_PASSWORD`: Az alapértelmezett admin felhasználó jelszava, ha az `admin` tábla üres (pl. `Minad123`).
 
 Ajánlott egy `.env` fájlt létrehozni a projekt gyökérkönyvtárában ezekkel az értékekkel. A `.env` fájlt kihagyjuk a verziókezelésből.
 Példa `.env` fájl:
