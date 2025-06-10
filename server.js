@@ -74,10 +74,8 @@ function ensureDefaultAdmin() {
 // AUTH Middleware
 function verifyToken(req, res, next) {
   const authHeader = req.headers['authorization'];
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(403).send('Érvénytelen vagy hiányzó Bearer token.');
-  }
-  const token = authHeader.substring(7); // Token kinyerése a "Bearer " után
+  const token = authHeader && authHeader.split(' ')[1];
+  if (!token) return res.status(401).json({ error: 'Hiányzó vagy érvénytelen token.' });
   jwt.verify(token, SECRET, (err, decoded) => {
     if (err) return res.status(403).send('Token verifikáció sikertelen, érvénytelen token.');
     req.admin = decoded;

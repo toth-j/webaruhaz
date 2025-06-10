@@ -44,7 +44,7 @@ adminLoginFormModal.addEventListener('submit', async (event) => {
     });
     if (!response.ok) {
       const errorData = await response.text();
-      throw new Error(`Bejelentkezési hiba: ${response.status} - ${errorData || 'Ismeretlen hiba'}`);
+      throw new Error(`Bejelentkezési hiba: ${response.status} - ${errorData}`);
     }
     const data = await response.json();
     if (data.token) {
@@ -65,9 +65,7 @@ adminLoginFormModal.addEventListener('submit', async (event) => {
 
 async function fetchRendelesek() {
   if (!adminToken) {
-    console.error("Nincs admin token a rendelések lekéréséhez.");
-    rendelesekTablaBody.innerHTML = `<tr><td colspan="8" class="text-center text-danger">Bejelentkezés szükséges a rendelések megtekintéséhez.</td></tr>`;
-    loginModalElem.show(); // Ha valahogy idejutunk token nélkül, mutassuk a logint
+    handleAuthError();
     return;
   }
   try {
@@ -91,7 +89,7 @@ async function handleAuthError() {
   sessionStorage.removeItem('adminToken');
   adminToken = null;
   loginModalElem.show();
-  rendelesekTablaBody.innerHTML = `<tr><td colspan="8" class="text-center text-warning">Lejárt vagy érvénytelen munkamenet. Kérjük, jelentkezzen be újra.</td></tr>`;
+  rendelesekTablaBody.innerHTML = `<tr><td colspan="8" class="text-center text-warning">Kérjük, jelentkezzen be a rendelések megtekintéséhez!</td></tr>`;
 }
 
 function renderRendelesek(rendelesek) {
@@ -126,6 +124,11 @@ function renderRendelesek(rendelesek) {
     postazGomb.title = "Postázás dátumának megadása";
     postazGomb.onclick = () => handlePostazas(r.id);
     muveletekCella.appendChild(postazGomb);
+
+    if (r.postazva) {
+      postazGomb.disabled = true;
+      postazGomb.className = 'btn btn-sm btn-secondary me-1'; // Szürkébb gomb
+    }
 
     const torolGomb = document.createElement('button');
     torolGomb.className = 'btn btn-sm btn-danger';
@@ -186,11 +189,13 @@ async function handlePostazas(rendelesId) {
       await handleAuthError();
       return;
     }
-    if (!response.ok) throw new Error('Postázás dátumának frissítése sikertelen');
-    fetchRendelesek(); 
+    if (!response.ok) {
+      throw new Error(`Postázás dátumának frissítése sikertelen. Státusz: ${response.status}`);
+    }
+    fetchRendelesek();
   } catch (error) {
     console.error("Hiba a postázás dátumának frissítésekor:", error);
-    alert('Hiba történt a postázás dátumának mentésekor.');
+    alert(`Hiba történt a postázás dátumának mentésekor: ${error.message}`);
   }
 };
 
