@@ -5,29 +5,29 @@
 1. [Bevezetés](#1-bevezetés)
 2. [Célközönség](#2-célközönség)
 3. [Funkcionális követelmények](#3-funkcionális-követelmények)
-    1. [Felhasználói (vásárlói) felület](#31-felhasználói-vásárlói-felület)
-        1. [Termékek böngészése](#311-termékek-böngészése)
-        2. [Kosár kezelése](#312-kosár-kezelése)
-        3. [Pénztár folyamat](#313-pénztár-folyamat)
-    2. [Adminisztrációs felület](#32-adminisztrációs-felület)
-        1. [Bejelentkezés](#321-bejelentkezés)
-        2. [Rendelések kezelése](#322-rendelések-kezelése)
+   1. [Felhasználói (vásárlói) felület](#31-felhasználói-vásárlói-felület)
+      1. [Termékek böngészése](#311-termékek-böngészése)
+      2. [Kosár kezelése](#312-kosár-kezelése)
+      3. [Pénztár folyamat](#313-pénztár-folyamat)
+   2. [Adminisztrációs felület](#32-adminisztrációs-felület)
+      1. [Bejelentkezés](#321-bejelentkezés)
+      2. [Rendelések kezelése](#322-rendelések-kezelése)
 4. [Nem funkcionális követelmények](#4-nem-funkcionális-követelmények)
-    1. [Felhasználhatóság](#41-felhasználhatóság)
-    2. [Biztonság (alapvető)](#42-biztonság-alapvető)
-    3. [Teljesítmény (alapvető)](#43-teljesítmény-alapvető)
+   1. [Felhasználhatóság](#41-felhasználhatóság)
+   2. [Biztonság (alapvető)](#42-biztonság-alapvető)
+   3. [Teljesítmény (alapvető)](#43-teljesítmény-alapvető)
 5. [Adatmodell (magas szintű)](#5-adatmodell-magas-szintű)
 6. [Felhasználói felület vázlatok (magas szintű)](#6-felhasználói-felület-vázlatok-magas-szintű)
-    1. [Termékoldal (index.html)](#61-termékoldal-indexhtml)
-    2. [Pénztár oldal (checkout.html)](#62-pénztár-oldal-checkouthtml)
-    3. [Admin felület (admin.html)](#63-admin-felület-adminhtml)
+   1. [Termékoldal (index.html)](#61-termékoldal-indexhtml)
+   2. [Pénztár oldal (checkout.html)](#62-pénztár-oldal-checkouthtml)
+   3. [Admin felület (admin.html)](#63-admin-felület-adminhtml)
 7. [Technológiai verem](#7-technológiai-verem)
 
 ## 1. Bevezetés
 
 Ez a dokumentum a "Webáruház" elnevezésű egyszerű e-kereskedelmi alkalmazás specifikációját tartalmazza. Az alkalmazás célja, hogy lehetővé tegye a felhasználók számára termékek böngészését, kosárba helyezését és megrendelését, valamint az adminisztrátorok számára a beérkezett rendelések kezelését.
 
-## 2. Célközönség
+## 2. Felhasználók
 
 * **Vásárlók:** Olyan felhasználók, akik online szeretnének termékeket vásárolni.
 * **Adminisztrátorok:** Az áruház üzemeltetői, akik a rendeléseket és a termékeket (bár a termékkezelés jelenleg nem része a specifikációnak) kezelik.
@@ -144,7 +144,6 @@ Az alkalmazás a következő fő entitásokat kezeli:
   * `better-sqlite3` (SQLite driver)
   * `bcrypt` (jelszó hash-elés)
   * `jsonwebtoken` (JWT token kezelés)
-  * `cors` (Cross-Origin Resource Sharing)
   * `dotenv` (környezeti változók kezelése)
 * **Adattárolás (kliensoldal):**
   * `localStorage` (kosár adatok átmeneti tárolása)

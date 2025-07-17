@@ -128,7 +128,7 @@ A frontend fájljai a `public` mappában találhatók.
 ## 5. Stílusok és külső könyvtárak
 
 - **Bootstrap 5.3:** A reszponzív dizájnért, a rácsrendszerért, az alapvető stílusokért és a komponensekért (kártyák, modális ablakok, gombok, űrlapok, táblázatok, spinnerek) felel. A CDN-ről van betöltve.
-- **Bootstrap Icons 1.11.1:** Ikonokat biztosít az alkalmazáshoz (pl. kosár, kamion, kuka ikonok). A CDN-ről van betöltve.
+- **Bootstrap Icons 1.11.1:** Ikonokat biztosít az alkalmazáshoz (pl. kosár, kamion, kuka ikonok). A CDN-ről töltődik be.
 - **`style.css`:** Egyedi CSS szabályokat tartalmaz, amelyek felülírják vagy kiegészítik a Bootstrap stílusait (pl. termékkép méretezése, sticky összesítő).
 
 ## 6. Tesztelés
@@ -140,30 +140,30 @@ A frontend funkcionalitásának ellenőrzésére end-to-end (E2E) tesztesetek le
 A következő fő felhasználói útvonalakat érdemes tesztelni:
 
 1. **Sikeres vásárlási folyamat:**
-    - Termékek kosárba helyezése az `index.html` oldalon.
-    - Végösszeg helyes frissülése.
-    - Navigáció a `checkout.html` oldalra.
-    - Kosár tartalmának és végösszegének ellenőrzése a pénztár oldalon.
-    - Szállítási adatok kitöltése.
-    - Sikeres rendelés leadása.
-    - Visszairányítás a főoldalra, kosár és `localStorage` ürítése.
+   - Termékek kosárba helyezése az `index.html` oldalon.
+   - Végösszeg helyes frissülése.
+   - Navigáció a `checkout.html` oldalra.
+   - Kosár tartalmának és végösszegének ellenőrzése a pénztár oldalon.
+   - Szállítási adatok kitöltése.
+   - Sikeres rendelés leadása.
+   - Visszairányítás a főoldalra, kosár és `localStorage` ürítése.
 2. **Pénztár űrlap validációja:**
-    - Kötelező mezők üresen hagyása és hibajelzések ellenőrzése.
-    - Érvénytelen formátumú adatok megadása (pl. email, irányítószám) és hibajelzések ellenőrzése.
-    - Sikeres kitöltés után a rendelés elküldése.
+   - Kötelező mezők üresen hagyása és hibajelzések ellenőrzése.
+   - Érvénytelen formátumú adatok megadása (pl. email, irányítószám) és hibajelzések ellenőrzése.
+   - Sikeres kitöltés után a rendelés elküldése.
 3. **Üres kosár a pénztár oldalon:**
-    - Közvetlen navigáció a `checkout.html`-re üres `localStorage` mellett.
-    - Megfelelő üzenet megjelenítése és az űrlap elrejtése/letiltása.
+   - Közvetlen navigáció a `checkout.html`-re üres `localStorage` mellett.
+   - Megfelelő üzenet megjelenítése és az űrlap elrejtése/letiltása.
 4. **Admin felület - Bejelentkezés és kijelentkezés:**
-    - `admin.html` megnyitása, bejelentkezési modal megjelenése.
-    - Sikertelen bejelentkezési kísérlet (hibás adatok).
-    - Sikeres bejelentkezés, rendelési táblázat megjelenése.
-    - Sikeres kijelentkezés, átirányítás a főoldalra.
-    - Visszanavigálási kísérlet az admin felületre kijelentkezés után (bejelentkezési modalnak kell megjelennie).
+   - `admin.html` megnyitása, bejelentkezési modal megjelenése.
+   - Sikertelen bejelentkezési kísérlet (hibás adatok).
+   - Sikeres bejelentkezés, rendelési táblázat megjelenése.
+   - Sikeres kijelentkezés, átirányítás a főoldalra.
+   - Visszanavigálási kísérlet az admin felületre kijelentkezés után (bejelentkezési modalnak kell megjelennie).
 5. **Admin felület - Rendelések kezelése:**
-    - Rendelési tételek megtekintése modális ablakban.
-    - Rendelés postázottnak jelölése.
-    - Rendelés törlése.
-    - A lista megfelelő frissülése a műveletek után.
+   - Rendelési tételek megtekintése modális ablakban.
+   - Rendelés postázottnak jelölése.
+   - Rendelés törlése.
+   - A lista megfelelő frissülése a műveletek után.
 
 Ezek a tesztesetek lefedik az alkalmazás alapvető működését és a felhasználói interakciókat.

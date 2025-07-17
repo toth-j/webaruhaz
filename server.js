@@ -3,9 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const DB = require('better-sqlite3');
 const bcrypt = require('bcrypt');
-const cors = require('cors');
 const jwt = require('jsonwebtoken');
-const path = require('path');
 
 const app = express();
 const db = new DB('./webaruhaz.db');
@@ -15,9 +13,8 @@ const PORT = process.env.PORT || 3000;
 const SECRET = process.env.JWT_SECRET || 'titkoskulcs';
 
 // Middleware
-app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
 // Adatbázis inicializálása: táblák létrehozása, ha nem léteznek
 function initializeDatabase() {
@@ -216,3 +213,9 @@ ensureDefaultAdmin(); // Alapértelmezett admin felhasználó biztosítása
 app.listen(PORT, () => {
   console.log(`Backend fut a http://localhost:${PORT} címen`);
 });
+process.on('exit', () => {
+    db.close();
+    console.log('Adatbázis kapcsolat lezárva.');
+});
+process.on('SIGINT', () => process.exit());
+process.on('SIGTERM', () => process.exit());

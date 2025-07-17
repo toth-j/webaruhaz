@@ -1,6 +1,6 @@
 # Tesztesetek a webáruházhoz
 
-## 1. Teszteset: Sikeres vásárlási folyamat
+## 1. teszteset: Sikeres vásárlási folyamat
 
 **Cél:** Ellenőrizni, hogy a felhasználó képes-e termékeket a kosárba helyezni, és sikeresen leadni egy rendelést.
 
@@ -35,7 +35,7 @@
 
 * * *
 
-## 2. Teszteset: Pénztár űrlap validációja
+## 2. teszteset: Pénztár űrlap validációja
 
 **Cél:** Ellenőrizni, hogy a pénztár oldalon az űrlap validációja megfelelően működik-e.
 
@@ -60,7 +60,7 @@
 
 * * *
 
-## 3. Teszteset: Üres kosár a pénztár oldalon
+## 3. teszteset: Üres kosár a pénztár oldalon
 
 **Cél:** Ellenőrizni, hogy az alkalmazás megfelelően kezeli-e, ha a felhasználó üres kosárral (vagy `localStorage` adatok nélkül) próbál a pénztár oldalra navigálni.
 
@@ -75,7 +75,7 @@
 
 * * *
 
-## 4. Teszteset: Admin felület - Sikeres bejelentkezés és kijelentkezés
+## 4. teszteset: Admin felület - Sikeres bejelentkezés és kijelentkezés
 
 **Cél:** Ellenőrizni az adminisztrátori bejelentkezési és kijelentkezési folyamatot.
 
@@ -101,7 +101,7 @@
 
 * * *
 
-## 5. Teszteset: Admin felület - Rendelések kezelése
+## 5. teszteset: Admin felület - Rendelések kezelése
 
 **Cél:** Ellenőrizni a rendelések megtekintését, postázását és törlését az admin felületen.
 
