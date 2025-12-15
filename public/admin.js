@@ -13,10 +13,22 @@ const loginModalErrorDiv = document.getElementById('loginModalError');
 
 const logoutButton = document.getElementById('logoutButton');
 
+initAdminPage();
+
+async function initAdminPage() {
+  adminToken = sessionStorage.getItem('adminToken');
+  if (!adminToken) {
+    rendelesekTablaBody.innerHTML = `<tr><td colspan="8" class="text-center text-info">Kérjük, jelentkezzen be az adatok megtekintéséhez.</td></tr>`;
+    loginModalElem.show();
+  } else {
+    fetchRendelesek();
+  }
+}
+
 logoutButton.addEventListener('click', () => {
   sessionStorage.removeItem('adminToken');
   adminToken = null;
-  window.location.replace('index.html'); // replace() használata, hogy ne kerüljön a history-ba az admin oldal
+  window.location.replace('index.html');
 });
 
 adminLoginFormModal.addEventListener('submit', async (event) => {
@@ -44,7 +56,7 @@ adminLoginFormModal.addEventListener('submit', async (event) => {
     });
     if (!response.ok) {
       const errorData = await response.text();
-      throw new Error(`Bejelentkezési hiba: ${response.status} - ${errorData}`);
+      throw new Error(`${response.status} - ${errorData}`);
     }
     const data = await response.json();
     if (data.token) {
@@ -64,18 +76,10 @@ adminLoginFormModal.addEventListener('submit', async (event) => {
 });
 
 async function fetchRendelesek() {
-  if (!adminToken) {
-    handleAuthError();
-    return;
-  }
   try {
     const response = await fetch('/api/admin/rendelesek', {
       headers: { 'Authorization': `Bearer ${adminToken}` }
     });
-    if (response.status === 403) { // Token hiba
-      await handleAuthError();
-      return;
-    }
     if (!response.ok) throw new Error(`HTTP hiba! Státusz: ${response.status}`);
     const rendelesek = await response.json();
     renderRendelesek(rendelesek);
@@ -83,13 +87,6 @@ async function fetchRendelesek() {
     console.error("Hiba a rendelések lekérése közben:", error);
     rendelesekTablaBody.innerHTML = `<tr><td colspan="8" class="text-center text-danger">Hiba történt a rendelések betöltése közben.</td></tr>`;
   }
-}
-
-async function handleAuthError() {
-  sessionStorage.removeItem('adminToken');
-  adminToken = null;
-  loginModalElem.show();
-  rendelesekTablaBody.innerHTML = `<tr><td colspan="8" class="text-center text-warning">Kérjük, jelentkezzen be a rendelések megtekintéséhez!</td></tr>`;
 }
 
 function renderRendelesek(rendelesek) {
@@ -105,7 +102,6 @@ function renderRendelesek(rendelesek) {
     sor.insertCell().textContent = r.email;
     sor.insertCell().textContent = `${r.iranyitoszam} ${r.telepules}, ${r.cim}`;
     sor.insertCell().textContent = r.megrendelve ? new Date(r.megrendelve).toLocaleDateString('hu-HU') : '-';
-
     sor.insertCell().textContent = r.postazva ? new Date(r.postazva).toLocaleDateString('hu-HU') : 'Nincs postázva';
 
     const tetelGombCella = sor.insertCell();
@@ -145,10 +141,6 @@ async function showTetelek(rendelesId) {
     const response = await fetch(`/api/admin/rendelesek/${rendelesId}`, {
       headers: { 'Authorization': `Bearer ${adminToken}` }
     });
-    if (response.status === 403) {
-      await handleAuthError();
-      return;
-    }
     if (!response.ok) throw new Error('Tételek lekérése sikertelen');
     const tetelek = await response.json();
     rendelesTetelekTablaBody.innerHTML = '';
@@ -174,7 +166,7 @@ async function handlePostazas(rendelesId) {
   if (!confirm(`Biztosan mai nappal postázottnak jelöli a(z) ${rendelesId} azonosítójú rendelést?`)) {
     return;
   }
-  const datum_postazas = new Date().toISOString().split('T')[0]; // Mai nap YYYY-MM-DD formátumban
+  const postazasDatuma = new Date().toISOString().split('T')[0]; // Mai nap YYYY-MM-DD formátumban
 
   try {
     const response = await fetch(`/api/admin/rendelesek/${rendelesId}/postazas`, {
@@ -183,12 +175,8 @@ async function handlePostazas(rendelesId) {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${adminToken}`
       },
-      body: JSON.stringify({ datum_postazas }) // A backend 'datum_postazas'-t vár
+      body: JSON.stringify({ datum_postazas: postazasDatuma })
     });
-    if (response.status === 403) {
-      await handleAuthError();
-      return;
-    }
     if (!response.ok) {
       throw new Error(`Postázás dátumának frissítése sikertelen. Státusz: ${response.status}`);
     }
@@ -208,10 +196,6 @@ async function handleTorles(rendelesId) {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${adminToken}` }
     });
-    if (response.status === 403) {
-      await handleAuthError();
-      return;
-    }
     if (!response.ok) throw new Error('Rendelés törlése sikertelen');
     fetchRendelesek();
   } catch (error) {
@@ -220,14 +204,3 @@ async function handleTorles(rendelesId) {
   }
 };
 
-async function initAdminPage() {
-  adminToken = sessionStorage.getItem('adminToken');
-  if (!adminToken) {
-    loginModalElem.show();
-    rendelesekTablaBody.innerHTML = `<tr><td colspan="8" class="text-center text-info">Kérjük, jelentkezzen be az adatok megtekintéséhez.</td></tr>`;
-  } else {
-    fetchRendelesek();
-  }
-}
-
-initAdminPage();

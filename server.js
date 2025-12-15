@@ -163,7 +163,8 @@ app.get('/api/admin/rendelesek/:id', verifyToken, (req, res) => {
       return res.status(404).json({ message: "A megadott azonosítóval nem található rendelés." });
     }
 
-    const rows = db.prepare(`SELECT t.nev, t.ar, rt.mennyiseg FROM rendeles_tetelek rt JOIN termekek t ON rt.termek_id = t.id WHERE rt.rendeles_id = ?`)
+    const rows = db.prepare(`SELECT t.nev, t.ar, rt.mennyiseg 
+      FROM rendeles_tetelek rt JOIN termekek t ON rt.termek_id = t.id WHERE rt.rendeles_id = ?`)
       .all(req.params.id);
     res.status(200).json(rows); // Ha a rendelés létezik, de nincsenek tételei, üres tömböt ad vissza
   } catch (err) {
@@ -213,6 +214,7 @@ ensureDefaultAdmin(); // Alapértelmezett admin felhasználó biztosítása
 app.listen(PORT, () => {
   console.log(`Backend fut a http://localhost:${PORT} címen`);
 });
+
 process.on('exit', () => {
     db.close();
     console.log('Adatbázis kapcsolat lezárva.');

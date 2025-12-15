@@ -43,8 +43,6 @@ Content-Type: application/json
     // Hiányzó többi mező és tételek
 }
 
-###
-
 ### 2.2. Új rendelés létrehozása (érvénytelen tételekkel)
 # Elvárt eredmény: 400 Bad Request, JSON objektum { "siker": false, "message": "Érvénytelen tételek a rendelésben." }.
 POST {{baseUrl}}/api/rendeles
@@ -109,7 +107,7 @@ Authorization: Bearer {{loginAdmin.response.body.token}}
 Content-Type: application/json
 
 ### 4.1. Összes rendelés listázása (admin, token nélkül)
-# Elvárt eredmény: 403 Forbidden, szöveges válasz "Érvénytelen vagy hiányzó Bearer token".
+# Elvárt eredmény: 401 Unauthorized, szöveges válasz "Érvénytelen vagy hiányzó token".
 GET {{baseUrl}}/api/admin/rendelesek
 Content-Type: application/json
 

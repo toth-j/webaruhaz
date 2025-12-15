@@ -8,7 +8,7 @@ let termekAdatokTeljes = []; // Tárolja a fetchelt termékadatokat
 // Termékek lekérése a backendről
 async function fetchTermekek() {
     try {
-        const response = await fetch('http://localhost:3000/api/termekek');
+        const response = await fetch('/api/termekek');
         if (!response.ok) {
             throw new Error(`HTTP hiba! Státusz: ${response.status}`);
         }
@@ -32,7 +32,7 @@ function renderTermekek(termekek) {
         const columnDiv = document.createElement('div');
         columnDiv.className = 'col-md-6 col-lg-4 mb-4';
 
-        const kepUrl = termek.kep_url || `https://via.placeholder.com/300x200.png?text=${encodeURIComponent(termek.nev)}`;
+        const kepUrl = termek.kep_url || `https://placehold.co/300x200/png`;
         const leiras = termek.leiras || 'Nincs részletes leírás.';
 
         columnDiv.innerHTML = `

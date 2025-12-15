@@ -18,7 +18,7 @@ if (kosarCheckoutnak && kosarCheckoutnak.length > 0) {
         const listItem = document.createElement('li');
         listItem.className = 'list-group-item d-flex justify-content-between lh-sm summary-item';
 
-        const kepUrl = tetel.kep_url || `https://via.placeholder.com/60x60.png?text=${encodeURIComponent(tetel.nev.substring(0, 1))}`;
+        const kepUrl = tetel.kep_url || `https://placehold.co/60x60/png`;
 
         listItem.innerHTML = `
                 <div class="d-flex align-items-center">
@@ -76,7 +76,7 @@ rendelesUrlap.addEventListener('submit', async function (event) {
     };
 
     try {
-        const response = await fetch('http://localhost:3000/api/rendeles', {
+        const response = await fetch('/api/rendeles', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
